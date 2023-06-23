@@ -46,7 +46,8 @@ class StoryController extends Controller
         return Story::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'user_id' => $userId
+            'user_id' => $userId,
+            'image' => $request->input('image')
         ]);
     }
 
