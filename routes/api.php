@@ -39,3 +39,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::put('/post/edit/{id}', [PostController::class, 'editPost']);
     Route::delete('/post/delete/{id}', [PostController::class, 'deletePost']);
 });
+
+

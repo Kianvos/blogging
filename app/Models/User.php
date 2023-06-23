@@ -50,4 +50,10 @@ class User extends Authenticatable
     public function stories(): HasMany {
         return $this->hasMany(Story::class);
     }
+
+
+    public function isUserAuthorizedByStory($userId, $storyId){
+        $story = Story::find($storyId);
+        return $story->user_id === $userId;
+    }
 }

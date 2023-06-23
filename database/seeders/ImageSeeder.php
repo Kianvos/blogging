@@ -12,17 +12,17 @@ class ImageSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('images')->insert([
-            [
-                'description' => fake()->text(),
-                'post_id' => 1,
-                'image' => fake()->image()
-            ],
-            [
-                'description' => fake()->text(),
-                'post_id' => 1,
-                'image' => fake()->image()
-            ]
-        ]);
+//        DB::table('images')->insert([
+//            [
+//                'description' => fake()->text(),
+//                'post_id' => 1,
+//                'image' => 'fake()->image()'
+//            ],
+//            [
+//                'description' => fake()->text(),
+//                'post_id' => 1,
+//                'image' => fake()->image()
+//            ]
+//        ]);
     }
 }

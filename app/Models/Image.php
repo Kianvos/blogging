@@ -20,4 +20,42 @@ class Image extends Model
     {
         return $this->belongsTo(Post::class);
     }
+
+    public function addImagesToPost($postId, $images)
+    {
+        foreach ($images as $image) {
+            Image::create([
+                'description' => $image['description'],
+                'image' => $image['image'],
+                'post_id' => $postId
+            ]);
+        }
+    }
+
+    public function imagesUpdate($postId, $images)
+    {
+
+        //Bekijken welke id er in staan voor verwijderen
+        if (isset($images['delete'])){
+            foreach ($images['delete'] as $image) {
+                $imageDB = Image::find($image);
+                if ($imageDB){
+                    if ($imageDB->post_id == $postId){
+                        $imageDB->delete();
+
+                    }
+                }
+            }
+        }
+
+        if (isset($images['new'])){
+            foreach ($images['new'] as $image) {
+                Image::create([
+                    'description' => $image['description'],
+                    'image' => $image['image'],
+                    'post_id' => $postId
+                ]);
+            }
+        }
+    }
 }

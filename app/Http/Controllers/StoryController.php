@@ -26,7 +26,7 @@ class StoryController extends Controller
     {
         $storyId = $request->route("id");
 
-        $story = Story::with('posts')->find($storyId);
+        $story = Story::with('posts.images')->find($storyId);
         if (!$story) {
             return response(["error" => "Story not found"], 404);
         }
