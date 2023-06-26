@@ -15,9 +15,9 @@ class StoryController extends Controller
             }
         ])->get();
 
-        $stories->each(function ($story) {
-            $story->user->makeHidden('id');
-        });
+//        $stories->each(function ($story) {
+//            $story->user->makeHidden('id');
+//        });
 
         return $stories;
     }
