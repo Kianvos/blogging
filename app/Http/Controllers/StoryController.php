@@ -9,12 +9,21 @@ class StoryController extends Controller
 {
     public function getAllStories()
     {
-        $stories = Story::with([
-            'user' => function ($query) {
-                $query->select('id', 'first_name', 'last_name');
-            }
-        ])->orderByDesc('created_at')
+        $stories = Story::leftJoin('posts', 'stories.id', '=', 'posts.story_id')
+            ->select('stories.*')
+            ->selectRaw('MAX(posts.created_at) as max')
+            ->with([
+                'user' => function ($query) {
+                    $query->select('id', 'first_name', 'last_name');
+                }
+            ])
+            ->groupBy('stories.id')
+            ->orderByDesc('max')
             ->get();
+
+
+
+
 
 
         return $stories;
@@ -24,7 +33,11 @@ class StoryController extends Controller
     {
         $storyId = $request->route("id");
 
-        $story = Story::with('posts.images')->orderByDesc('created_at')->find($storyId);
+        $story = Story::with(['posts' => function ($query) {
+            $query->orderBy('created_at', 'desc');
+            $query->with('images');
+        }])->find($storyId);
+
         if (!$story) {
             return response(["error" => "Story not found"], 404);
         }
