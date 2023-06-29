@@ -13,11 +13,9 @@ class StoryController extends Controller
             'user' => function ($query) {
                 $query->select('id', 'first_name', 'last_name');
             }
-        ])->get();
+        ])->orderByDesc('created_at')
+            ->get();
 
-//        $stories->each(function ($story) {
-//            $story->user->makeHidden('id');
-//        });
 
         return $stories;
     }
@@ -26,7 +24,7 @@ class StoryController extends Controller
     {
         $storyId = $request->route("id");
 
-        $story = Story::with('posts.images')->find($storyId);
+        $story = Story::with('posts.images')->orderByDesc('created_at')->find($storyId);
         if (!$story) {
             return response(["error" => "Story not found"], 404);
         }
@@ -71,6 +69,7 @@ class StoryController extends Controller
         $story->update([
             'title' => $title,
             'description' => $description,
+            'image' => $request->input('image')
         ]);
         return $story;
     }

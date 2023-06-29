@@ -22,6 +22,15 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'birthday' => Carbon::create('2002', '07', '25'),
                 'created_at' => Carbon::now(),
-            ]]);
+            ],
+            [
+                'first_name' => fake()->firstName(),
+                'last_name' => fake()->lastName(),
+                'email' => 'test2@kianvos.nl',
+                'password' => Hash::make('password'),
+                'birthday' => Carbon::create('2005', '07', '25'),
+                'created_at' => Carbon::now(),
+            ]
+        ]);
     }
 }
