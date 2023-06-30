@@ -32,6 +32,10 @@ class Image extends Model
         }
     }
 
+    public function getImage($imageId){
+        return Image::find($imageId);
+    }
+
     public function imagesUpdate($postId, $images)
     {
 

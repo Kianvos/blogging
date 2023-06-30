@@ -10,13 +10,23 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function getPost(Request $request){
+        $host = $request->getSchemeAndHttpHost();
         $userId = $request->user()['id'];
         $postId = $request->route("id");
 
-        if (!Post::userIsOwnerPost($userId, $postId)){
+        $isPost = Post::find($postId);
+        if (!$isPost) {
+            return response()->json(['error' => 'Not found'], 404);
+        }
+        if (!Post::userIsOwnerPost($userId, $postId)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return Post::with('images')->find($postId);
+
+        $post = Post::with('images')->find($postId);
+        foreach ($post->images as $image) {
+            $image->image = "$host/image/$image->id";
+        }
+        return $post;
     }
 
     //

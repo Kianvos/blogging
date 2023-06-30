@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class StoryController extends Controller
 {
-    public function getAllStories()
+    public function getAllStories(Request $request)
     {
+        $host = $request->getSchemeAndHttpHost();
         $stories = Story::leftJoin('posts', 'stories.id', '=', 'posts.story_id')
             ->select('stories.*')
             ->selectRaw('MAX(posts.created_at) as max')
@@ -21,16 +22,17 @@ class StoryController extends Controller
             ->orderByDesc('max')
             ->get();
 
-
-
-
-
+        foreach ($stories as $story) {
+            $story->image = "$host/image/story/$story->id";
+        }
+//        error_log($stories);
 
         return $stories;
     }
 
     public function getUserStory(Request $request)
     {
+        $host = $request->getSchemeAndHttpHost();
         $storyId = $request->route("id");
 
         $story = Story::with(['posts' => function ($query) {
@@ -41,6 +43,13 @@ class StoryController extends Controller
         if (!$story) {
             return response(["error" => "Story not found"], 404);
         }
+        $story->image = "$host/image/story/$story->id";
+        foreach ($story->posts as $post) {
+            foreach ($post->images as $image) {
+                $image->image = "$host/image/$image->id";
+            }
+        }
+
         return $story;
     }
 
