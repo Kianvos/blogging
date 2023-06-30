@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/story/delete/{id}', [StoryController::class, 'deleteStory']);
 
     //Posts
+    Route::post('/post/{id}', [PostController::class, 'getPost']);
     Route::post('/post/create/{storyId}', [PostController::class, 'createPost']);
     Route::put('/post/edit/{id}', [PostController::class, 'editPost']);
     Route::delete('/post/delete/{id}', [PostController::class, 'deletePost']);

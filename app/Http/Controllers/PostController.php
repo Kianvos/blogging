@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function getPost(Request $request){
+        $userId = $request->user()['id'];
+        $postId = $request->route("id");
+
+        if (!Post::userIsOwnerPost($userId, $postId)){
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        return Post::with('images')->find($postId);
+    }
+
     //
     public function createPost(Request $request, Image $image, User $user)
     {
