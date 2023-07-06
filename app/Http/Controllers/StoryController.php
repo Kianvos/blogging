@@ -85,14 +85,23 @@ class StoryController extends Controller
 
         $title = $request->input('title');
         $description = $request->input('description');
-        if ($title === null || $description === null){
+        $image = $request->input('image');
+        if ($title === null || $description === null) {
             return response(["error" => "Not all inputs given"], 400);
         }
-        $story->update([
-            'title' => $title,
-            'description' => $description,
-            'image' => $request->input('image')
-        ]);
+        if ($image !== "none") {
+            $story->update([
+                'title' => $title,
+                'description' => $description,
+                'image' => $image
+            ]);
+        } else {
+            $story->update([
+                'title' => $title,
+                'description' => $description
+            ]);
+        }
+
         return $story;
     }
 

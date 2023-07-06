@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/image/{id}', [ImageController::class, 'hostImage']);
-Route::get('/image/story/{id}', [ImageController::class, 'hostImageStory']);
+Route::get('/image/{id}', [ImageController::class, 'hostImage'])->withoutMiddleware(StartsetMiddleware::class);
+Route::get('/image/story/{id}', [ImageController::class, 'hostImageStory'])->withoutMiddleware(StartsetMiddleware::class);
