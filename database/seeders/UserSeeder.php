@@ -16,9 +16,9 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'first_name' => fake()->firstName(),
-                'last_name' => fake()->lastName(),
-                'email' => 'test@kianvos.nl',
+                'first_name' => "Kian",
+                'last_name' => "Vos",
+                'email' => 'info@kianvos.nl',
                 'password' => Hash::make('password'),
                 'birthday' => Carbon::create('2002', '07', '25'),
                 'created_at' => Carbon::now(),
